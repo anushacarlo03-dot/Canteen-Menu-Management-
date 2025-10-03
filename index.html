@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMJ Canteen - Fresh & Delicious</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #2d3748;
+  background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 50%, #f0fff4 100%);
+  background-attachment: fixed;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  padding: 1rem 2rem;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.1);
+  border-bottom: 1px solid rgba(34, 197, 94, 0.1);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #16a34a;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #374151;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #16a34a;
+  transition: width 0.3s ease;
+}
+
+.nav-menu a:hover::after {
+  width: 100%;
+}
+
+.nav-menu a:hover {
+  color: #16a34a;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-icon {
+  position: relative;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.1);
+  transition: all 0.3s ease;
+}
+
+.cart-icon:hover {
+  background: rgba(34, 197, 94, 0.2);
+  transform: scale(1.05);
+}
+
+.cart-icon i {
+  font-size: 1.4rem;
+  color: #16a34a;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #dc2626;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 0.75rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.orders-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.orders-btn:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+}
+
+.admin-btn {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.admin-btn:hover {
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+}
+
+.hero {
+  height: 100vh;
+  background: linear-gradient(rgba(22, 163, 74, 0.7), rgba(21, 128, 61, 0.8)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(22, 163, 74, 0.3) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  padding: 0 2rem;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: 1.3rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.95;
+  font-weight: 400;
+}
+
+.cta-button {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+  background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+.notification-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  z-index: 5000;
+  transform: translateX(400px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 300px;
+}
+
+.notification-popup.show {
+  transform: translateX(0);
+}
+
+.notification-popup.success {
+  border-left: 4px solid #16a34a;
+}
+
+.notification-popup.error {
+  border-left: 4px solid #dc2626;
+}
+
+.notification-popup .icon {
+  font-size: 1.5rem;
+}
+
+.notification-popup.success .icon {
+  color: #16a34a;
+}
+
+.notification-popup.error .icon {
+  color: #dc2626;
+}
+
+.notification-popup .content h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.notification-popup .content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.section {
+  padding: 6rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section h2 {
+  text-align: center;
+  font-size: 2.8rem;
+  margin-bottom: 3rem;
+  color: #15803d;
+  font-weight: 700;
+  position: relative;
+}
+
+.section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  border-radius: 2px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin-top: 4rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(34, 197, 94, 0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.feature-card i {
+  font-size: 3.5rem;
+  color: #16a34a;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.feature-card h3 {
+  margin-bottom: 1rem;
+  color: #1f2937;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.feature-card p {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.menu-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.menu-tab {
+  background: white;
+  border: 2px solid rgba(34, 197, 94, 0.2);
+  padding: 15px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.menu-tab.active {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border-color: transparent;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.menu-tab:hover:not(.active) {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.4);
+  transform: translateY(-2px);
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.menu-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 1px solid rgba(34, 197, 94, 0.1);
+}
+
+.menu-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(34, 197, 94, 0.15);
+}
+
+.menu-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.menu-card:hover img {
+  transform: scale(1.05);
+}
+
+.menu-card-content {
+  padding: 1.5rem;
+}
+
+.menu-card h3 {
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.menu-card .description {
+  color: #6b7280;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.menu-card .price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #16a34a;
+  margin-bottom: 1rem;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.add-to-cart-btn:hover {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+}
+
+.cart-sidebar {
+  position: fixed;
+  right: -450px;
+  top: 0;
+  width: 450px;
+  height: 100vh;
+  background: white;
+  padding: 2rem;
+  transition: right 0.3s ease;
+  z-index: 1001;
+  overflow-y: auto;
+  box-shadow: -10px 0 50px rgba(0,0,0,0.1);
+}
+
+.cart-sidebar.open {
+  right: 0;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.cart-header h3 {
+  color: #16a34a;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.close-cart {
+  background: rgba(220, 38, 38, 0.1);
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #dc2626;
+  transition: all 0.3s ease;
+}
+
+.close-cart:hover {
+  background: rgba(220, 38, 38, 0.2);
+  transform: scale(1.1);
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-info h4 {
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.cart-item-info .item-price {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.qty-btn:hover {
+  background: #15803d;
+  transform: scale(1.1);
+}
+
+.qty-display {
+  font-weight: 600;
+  color: #1f2937;
+  min-width: 30px;
+  text-align: center;
+}
+
+.cart-total {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid #16a34a;
+  text-align: center;
+}
+
+.cart-total h3 {
+  font-size: 1.5rem;
+  color: #16a34a;
+  margin-bottom: 1rem;
+}
+
+.checkout-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.checkout-btn:hover {
+  background: linear-gradient(135deg, #15803d, #166534);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.modal-header h3 {
+  color: #16a34a;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.close-modal {
+  background: rgba(220, 38, 38, 0.1);
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #dc2626;
+  transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+  background: rgba(220, 38, 38, 0.2);
+  transform: scale(1.1);
+}
+
+.user-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.user-modal-content {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.user-modal-header {
+  margin-bottom: 2rem;
+}
+
+.user-modal-header h3 {
+  color: #16a34a;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.user-modal-header p {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.user-form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.user-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.user-form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.user-form-group input:focus {
+  outline: none;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+.user-login-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.user-login-btn:hover {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+.user-cancel-btn {
+  width: 100%;
+  background: #6b7280;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.user-cancel-btn:hover {
+  background: #4b5563;
+}
+
+.user-demo-info {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f0fff4;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #15803d;
+  text-align: left;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+}
+
+.empty-state i {
+  font-size: 4rem;
+  color: #d1d5db;
+  margin-bottom: 1rem;
+}
+
+.contact-form {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+footer {
+  background: #15803d;
+  color: white;
+  text-align: center;
+  padding: 3rem 2rem;
+  margin-top: 6rem;
+}
+
+footer p {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+footer i {
+  margin-right: 0.5rem;
+  color: #22c55e;
+}
+
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .section {
+    padding: 4rem 1rem;
+  }
+  
+  .cart-sidebar {
+    width: 100%;
+    right: -100%;
+  }
+  
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <a href="#home" class="logo">
+      <i class="fas fa-leaf"></i> JMJ Canteen
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="admin-btn" onclick="window.location.href='admin.html'">
+        <i class="fas fa-user-shield"></i> Admin
+      </button>
+      <button class="orders-btn" onclick="showUserLogin()" id="loginBtn">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+      <button class="orders-btn" onclick="showPreviousOrders()" style="display: none;" id="ordersBtn">
+        <i class="fas fa-history"></i> Orders
+      </button>
+      <button class="orders-btn" onclick="userLogout()" style="display: none;" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+      <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h1>Welcome to JMJ Canteen</h1>
+    <p>Experience fresh, delicious, and affordable meals made with love and served with care. Your satisfaction is our priority!</p>
+    <a href="#menu" class="cta-button">
+      <i class="fas fa-utensils"></i> Explore Our Menu
+    </a>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <h2><i class="fas fa-star"></i> Why Choose Us?</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <i class="fas fa-seedling"></i>
+      <h3>Fresh Ingredients</h3>
+      <p>We source the freshest ingredients daily from local suppliers to ensure quality and taste in every meal we serve.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-wallet"></i>
+      <h3>Affordable Prices</h3>
+      <p>Enjoy premium quality food at student-friendly prices without compromising on taste, nutrition, or portion sizes.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-shipping-fast"></i>
+      <h3>Quick Service</h3>
+      <p>Fast and efficient service with average preparation time of 5-10 minutes, ensuring your food is always served hot.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-shield-virus"></i>
+      <h3>Hygienic Standards</h3>
+      <p>Maintaining the highest hygiene standards with clean cooking environment, sanitized surfaces, and safe food handling.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="menu">
+  <h2><i class="fas fa-utensils"></i> Our Delicious Menu</h2>
+  
+  <div class="menu-tabs">
+    <button class="menu-tab active" onclick="showMenu('breakfast', this)">
+      <i class="fas fa-sun"></i> Breakfast
+    </button>
+    <button class="menu-tab" onclick="showMenu('lunch', this)">
+      <i class="fas fa-cloud-sun"></i> Lunch
+    </button>
+    <button class="menu-tab" onclick="showMenu('dinner', this)">
+      <i class="fas fa-moon"></i> Dinner
+    </button>
+    <button class="menu-tab" onclick="showMenu('beverages', this)">
+      <i class="fas fa-coffee"></i> Beverages
+    </button>
+  </div>
+  
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<section class="section" id="contact">
+  <h2><i class="fas fa-envelope"></i> Contact Us</h2>
+  <div class="contact-form">
+    <form onsubmit="submitContactForm(event)">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="contactEmail" name="email" required placeholder="Enter your email address">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+      </div>
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" rows="5" required placeholder="Write your message here..."></textarea>
+      </div>
+      <button type="submit" class="cta-button" style="width: 100%;">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+    </form>
+  </div>
+</section>
+
+<div class="user-modal" id="userModal">
+  <div class="user-modal-content">
+    <div class="user-modal-header">
+      <h3><i class="fas fa-user"></i> Customer Login</h3>
+      <p>Sign in to access your orders and profile</p>
+    </div>
+    
+    <form id="userForm" onsubmit="handleUserLogin(event)">
+      <div class="user-form-group">
+        <label for="userEmail">Email Address</label>
+        <input type="email" id="userEmail" name="email" required placeholder="Enter your email">
+      </div>
+      
+      <div class="user-form-group">
+        <label for="userPassword">Password</label>
+        <input type="password" id="userPassword" name="password" required placeholder="Enter your password">
+      </div>
+      
+      <button type="submit" class="user-login-btn">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+    </form>
+    
+    <button class="user-cancel-btn" onclick="closeUserModal()">
+      <i class="fas fa-times"></i> Cancel
+    </button>
+  </div>
+</div>
+
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+    <button class="close-cart" onclick="toggleCart()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div id="cartItems"></div>
+  <div class="cart-total">
+    <h3 id="cartTotal">Total: ₹0</h3>
+    <button class="checkout-btn" onclick="checkout()">
+      <i class="fas fa-credit-card"></i> Place Order
+    </button>
+  </div>
+</div>
+
+<div class="modal" id="ordersModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3><i class="fas fa-history"></i> Previous Orders</h3>
+      <button class="close-modal" onclick="closeOrdersModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div id="previousOrdersList"></div>
+  </div>
+</div>
+
+<div class="modal" id="orderModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3><i class="fas fa-check-circle"></i> Order Status</h3>
+      <button class="close-modal" onclick="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <p id="orderStatus"></p>
+    <button class="cta-button" onclick="closeModal()" style="margin-top: 1rem; width: 100%;">
+      <i class="fas fa-check"></i> OK
+    </button>
+  </div>
+</div>
+
+<footer>
+  <p>
+    <i class="fas fa-map-marker-alt"></i> #176, Jigani Anekal Taluk, Bangalore<br>
+    <i class="fas fa-phone"></i> +91 9611631872<br>
+    <i class="fas fa-envelope"></i> info@jmjcanteen.com<br>
+    <i class="fas fa-clock"></i> Open: 7:00 AM - 10:00 PM | Monday to Sunday<br><br>
+    © 2025 J.M.J Canteen. All rights reserved. Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> for food lovers
+  </p>
+</footer>
+
+<script>
+let cart = {};
+let cartCount = 0;
+let orderHistory = [];
+let orderCounter = parseInt(localStorage.getItem('orderCounter') || '1000');
+let isUserLoggedIn = localStorage.getItem('isUserLoggedIn') === 'true';
+let currentUser = localStorage.getItem('currentUser') || '';
+
+const menuData = {
+  breakfast: [
+    {name: "Classic Pancakes", price: 50, img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80", description: "Fluffy pancakes served with maple syrup and butter"},
+    {name: "Masala Omelette", price: 40, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400&q=80", description: "Spiced eggs with onions, tomatoes, and green chilies"},
+    {name: "French Toast", price: 45, img: "https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=400&q=80", description: "Golden toast with cinnamon and powdered sugar"},
+    {name: "Idli Sambhar", price: 35, img: "https://images.unsplash.com/photo-1630383249896-424e482df921?auto=format&fit=crop&w=400&q=80", description: "Steamed rice cakes with lentil curry and chutney"},
+    {name: "Masala Dosa", price: 40, img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=400&q=80", description: "Crispy dosa filled with spiced potato masala"},
+    {name: "Poha", price: 30, img: "c:/Users/ANUSHA CARLO/Downloads/vegetable poha.jpg", description: "Flattened rice with peanuts and spices"},
+    {name: "Vada Sambhar", price: 35, img: "c:/Users/ANUSHA CARLO/Downloads/vada_sambar.jpg", description: "Crispy lentil fritters with sambhar"},
+    {name: "Aloo Paratha", price: 45, img: "c:/Users/ANUSHA CARLO/Downloads/aloo_parata.jpg", description: "Stuffed potato flatbread with butter and curd"}
+  ],
+  lunch: [
+    {name: "South Indian Thali", price: 100, img: "c:/Users/ANUSHA CARLO/Downloads/south_indian thali.jpg", description: "Complete meal with rice, dal, vegetables, and dessert"},
+    {name: "Chicken Curry", price: 120, img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=400&q=80", description: "Tender chicken in rich, spiced gravy"},
+    {name: "Paneer Butter Masala", price: 110, img: "https://images.unsplash.com/photo-1631452180539-96aca7d48617?auto=format&fit=crop&w=400&q=80", description: "Creamy paneer cubes in rich tomato-based sauce"},
+    {name: "Vegetable Fried Rice", price: 90, img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=400&q=80", description: "Wok-tossed rice with fresh vegetables and soy sauce"},
+    {name: "Chicken Biryani", price: 150, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=400&q=80", description: "Fragrant basmati rice with tender chicken pieces"},
+    {name: "Dal Tadka", price: 70, img: "c:/Users/ANUSHA CARLO/Downloads/dal.jpg", description: "Yellow lentils tempered with aromatic spices"},
+    {name: "Chole Bhature", price: 80, img: "c:/Users/ANUSHA CARLO/Downloads/chole bature.jpg", description: "Spicy chickpeas with fluffy fried bread"},
+    {name: "Palak Paneer", price: 100, img: "c:/Users/ANUSHA CARLO/Downloads/palak panner.jpg", description: "Cottage cheese in creamy spinach gravy"},
+    {name: "Rajma Chawal", price: 85, img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=400&q=80", description: "Kidney bean curry with steamed rice"},
+    {name: "Veg Biryani", price: 100, img: "c:/Users/ANUSHA CARLO/Downloads/biryani_veg.jpg", description: "Aromatic rice with mixed vegetables and spices"}
+  ],
+  dinner: [
+    {name: "Creamy Pasta", price: 110, img: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=400&q=80", description: "Italian pasta in white sauce with herbs"},
+    {name: "Grilled Chicken", price: 200, img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=400&q=80", description: "Perfectly grilled chicken breast with sides"},
+    {name: "Margherita Pizza", price: 180, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80", description: "Classic pizza with fresh tomatoes and mozzarella"},
+    {name: "Paneer Tikka", price: 150, img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=400&q=80", description: "Grilled paneer cubes marinated in tandoor spices"},
+    {name: "Chicken Burger", price: 120, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80", description: "Juicy chicken patty with fresh veggies and fries"},
+    {name: "Veg Burger", price: 90, img: "https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&w=400&q=80", description: "Crispy veg patty with lettuce and cheese"},
+    {name: "Hakka Noodles", price: 100, img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", description: "Stir-fried noodles with vegetables"},
+    {name: "Manchurian Fried Rice", price: 120, img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=400&q=80", description: "Spicy fried rice with manchurian balls"},
+    {name: "Tomato Soup", price: 50, img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=400&q=80", description: "Creamy tomato soup with croutons"},
+    {name: "Sweet Corn Soup", price: 55, img: "c:/Users/ANUSHA CARLO/Downloads/corn soup.jpg", description: "Thick corn soup with vegetables"}
+  ],
+  beverages: [
+    {name: "Fresh Lime Water", price: 20, img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=400&q=80", description: "Refreshing lime juice with mint leaves"},
+    {name: "Masala Chai", price: 15, img: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=400&q=80", description: "Traditional Indian spiced tea"},
+    {name: "Filter Coffee", price: 18, img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=400&q=80", description: "Authentic South Indian filter coffee"},
+    {name: "Cold Coffee", price: 40, img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=400&q=80", description: "Chilled coffee with ice cream and whipped cream"},
+    {name: "Mango Lassi", price: 45, img: "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=400&q=80", description: "Sweet mango yogurt drink"},
+    {name: "Buttermilk", price: 20, img: "c:/Users/ANUSHA CARLO/Downloads/buttermilk.jpg", description: "Spiced yogurt drink with curry leaves"},
+    {name: "Fresh Orange Juice", price: 40, img: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=400&q=80", description: "Freshly squeezed orange juice"},
+    {name: "Iced Tea", price: 35, img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80", description: "Refreshing lemon iced tea"},
+    {name: "Badam Milk", price: 50, img: "c:/Users/ANUSHA CARLO/Downloads/badam_milk.jpg", description: "Almond flavored milk drink"},
+    {name: "Green Tea", price: 25, img: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?auto=format&fit=crop&w=400&q=80", description: "Healthy green tea with antioxidants"}
+  ]
+};
+
+function showUserLogin() {
+  document.getElementById('userModal').style.display = 'flex';
+}
+
+function closeUserModal() {
+  document.getElementById('userModal').style.display = 'none';
+  document.getElementById('userForm').reset();
+}
+
+function handleUserLogin(event) {
+  event.preventDefault();
+  const email = document.getElementById('userEmail').value;
+  const password = document.getElementById('userPassword').value;
+  
+  // Simple validation - accept any email format with any password
+  if (email.includes('@') && email.includes('.') && password.length >= 6) {
+    closeUserModal();
+    isUserLoggedIn = true;
+    currentUser = email;
+    localStorage.setItem('isUserLoggedIn', 'true');
+    localStorage.setItem('currentUser', email);
+    updateUIForLoggedInUser();
+    showNotification('success', 'Login Successful!', 'Welcome back to JMJ Canteen!');
+    
+    // Load user's order history
+    const userOrders = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+    orderHistory = userOrders.filter(o => o.customerId === currentUser);
+  } else {
+    if (!email.includes('@') || !email.includes('.')) {
+      showNotification('error', 'Invalid Email!', 'Please enter a valid email address.');
+    } else {
+      showNotification('error', 'Password Too Short!', 'Password must be at least 6 characters.');
+    }
+  }
+}
+
+function updateUIForLoggedInUser() {
+  document.getElementById('loginBtn').style.display = 'none';
+  document.getElementById('ordersBtn').style.display = 'inline-block';
+  document.getElementById('logoutBtn').style.display = 'inline-block';
+}
+
+function userLogout() {
+  isUserLoggedIn = false;
+  currentUser = '';
+  localStorage.removeItem('isUserLoggedIn');
+  localStorage.removeItem('currentUser');
+  
+  document.getElementById('loginBtn').style.display = 'inline-block';
+  document.getElementById('ordersBtn').style.display = 'none';
+  document.getElementById('logoutBtn').style.display = 'none';
+  
+  showNotification('success', 'Logged Out', 'You have been successfully logged out.');
+}
+
+function showNotification(type, title, message) {
+  const existingNotifications = document.querySelectorAll('.notification-popup');
+  existingNotifications.forEach(notification => notification.remove());
+  
+  const notification = document.createElement('div');
+  notification.className = 'notification-popup ' + type;
+  const iconClass = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+  
+  notification.innerHTML = 
+    '<div class="icon"><i class="' + iconClass + '"></i></div>' +
+    '<div class="content"><h4>' + title + '</h4><p>' + message + '</p></div>';
+  
+  document.body.appendChild(notification);
+  setTimeout(() => notification.classList.add('show'), 100);
+  
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => {
+      if (notification.parentNode) notification.parentNode.removeChild(notification);
+    }, 300);
+  }, 4000);
+}
+
+function showMenu(category, button) {
+  document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
+  button.classList.add('active');
+  
+  const menuGrid = document.getElementById('menuGrid');
+  menuGrid.style.opacity = '0';
+  
+  setTimeout(() => {
+    menuGrid.innerHTML = '';
+    menuData[category].forEach((item, index) => {
+      const menuCard = document.createElement('div');
+      menuCard.className = 'menu-card';
+      menuCard.innerHTML = 
+        '<img src="' + item.img + '" alt="' + item.name + '" loading="lazy">' +
+        '<div class="menu-card-content">' +
+          '<h3>' + item.name + '</h3>' +
+          '<p class="description">' + item.description + '</p>' +
+          '<div class="price">₹' + item.price + '</div>' +
+          '<button class="add-to-cart-btn" onclick="addToCart(\'' + item.name + '\', ' + item.price + ', \'' + item.img + '\', \'' + item.description + '\')">' +
+            '<i class="fas fa-plus"></i> Add to Cart' +
+          '</button>' +
+        '</div>';
+      menuGrid.appendChild(menuCard);
+    });
+    menuGrid.style.opacity = '1';
+  }, 200);
+}
+
+function addToCart(name, price, img, description) {
+  if (cart[name]) {
+    cart[name].quantity++;
+  } else {
+    cart[name] = {price: price, quantity: 1, img: img, description: description};
+  }
+  updateCartUI();
+  updateCartBadge();
+  
+  const button = event.target;
+  const originalHTML = button.innerHTML;
+  button.innerHTML = '<i class="fas fa-check"></i> Added!';
+  button.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+  setTimeout(() => {
+    button.innerHTML = originalHTML;
+    button.style.background = '';
+  }, 1500);
+}
+
+function updateCartUI() {
+  const cartItems = document.getElementById('cartItems');
+  cartItems.innerHTML = '';
+  let total = 0;
+  
+  if (Object.keys(cart).length === 0) {
+    cartItems.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-cart"></i><h3>Your cart is empty</h3><p>Add some delicious items from our menu!</p></div>';
+  } else {
+    Object.keys(cart).forEach(itemName => {
+      const item = cart[itemName];
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+      
+      const cartItem = document.createElement('div');
+      cartItem.className = 'cart-item';
+      cartItem.innerHTML = 
+        '<img src="' + item.img + '" alt="' + itemName + '">' +
+        '<div class="cart-item-info"><h4>' + itemName + '</h4><div class="item-price">₹' + item.price + ' each</div></div>' +
+        '<div class="cart-item-controls">' +
+          '<button class="qty-btn" onclick="changeQuantity(\'' + itemName + '\', -1)"><i class="fas fa-minus"></i></button>' +
+          '<span class="qty-display">' + item.quantity + '</span>' +
+          '<button class="qty-btn" onclick="changeQuantity(\'' + itemName + '\', 1)"><i class="fas fa-plus"></i></button>' +
+        '</div>';
+      cartItems.appendChild(cartItem);
+    });
+  }
+  document.getElementById('cartTotal').textContent = 'Total: ₹' + total;
+}
+
+function changeQuantity(itemName, delta) {
+  if (cart[itemName]) {
+    cart[itemName].quantity += delta;
+    if (cart[itemName].quantity <= 0) delete cart[itemName];
+    updateCartUI();
+    updateCartBadge();
+  }
+}
+
+function updateCartBadge() {
+  cartCount = Object.values(cart).reduce((total, item) => total + item.quantity, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = cartCount;
+  badge.style.display = cartCount > 0 ? 'flex' : 'none';
+}
+
+function toggleCart() {
+  document.getElementById('cartSidebar').classList.toggle('open');
+}
+
+function checkout() {
+  if (Object.keys(cart).length === 0) {
+    alert('Your cart is empty! Please add some items first.');
+    return;
+  }
+  
+  if (!isUserLoggedIn) {
+    alert('Please login to place an order!');
+    showUserLogin();
+    return;
+  }
+  
+  const order = {
+    id: ++orderCounter,
+    customerId: currentUser,
+    customerName: currentUser.split('@')[0],
+    items: Object.assign({}, cart),
+    total: Object.values(cart).reduce((total, item) => total + (item.price * item.quantity), 0),
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString(),
+    timestamp: new Date().getTime(),
+    status: 'Pending'
+  };
+  
+  orderHistory.unshift(order);
+  if (orderHistory.length > 10) orderHistory.pop();
+  localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+  
+  let adminOrders = JSON.parse(localStorage.getItem('adminOrders') || '[]');
+  adminOrders.unshift(order);
+  localStorage.setItem('adminOrders', JSON.stringify(adminOrders));
+  localStorage.setItem('orderCounter', orderCounter.toString());
+  
+  console.log('Order placed:', order);
+  console.log('Total admin orders:', adminOrders.length);
+  
+  document.getElementById('orderStatus').innerHTML = 
+    '<div style="text-align: center; padding: 1rem;">' +
+      '<div style="font-size: 3rem; color: #16a34a; margin-bottom: 1rem;"><i class="fas fa-check-circle"></i></div>' +
+      '<h3 style="color: #16a34a; margin-bottom: 1rem;">Order #' + order.id + '</h3>' +
+      '<p style="font-size: 1.1rem; margin-bottom: 1rem;">Order Confirmed! Your delicious meal is being prepared.</p>' +
+      '<p style="color: #6b7280;">Total: <strong>₹' + order.total + '</strong></p>' +
+    '</div>';
+  document.getElementById('orderModal').style.display = 'flex';
+  
+  cart = {};
+  updateCartUI();
+  updateCartBadge();
+  toggleCart();
+}
+
+function showPreviousOrders() {
+  const ordersList = document.getElementById('previousOrdersList');
+  const userOrders = JSON.parse(localStorage.getItem('orderHistory') || '[]').filter(o => o.customerId === currentUser);
+  
+  if (userOrders.length === 0) {
+    ordersList.innerHTML = '<div class="empty-state"><i class="fas fa-receipt"></i><h3>No previous orders</h3><p>Your order history will appear here once you place your first order.</p></div>';
+  } else {
+    ordersList.innerHTML = '';
+    userOrders.forEach(order => {
+      const orderCard = document.createElement('div');
+      orderCard.className = 'order-card';
+      const itemsList = Object.entries(order.items).map(([name, item]) => 
+        '<div class="order-item"><span>' + name + ' (×' + item.quantity + ')</span><span>₹' + (item.price * item.quantity) + '</span></div>'
+      ).join('');
+      
+      orderCard.innerHTML = 
+        '<div class="order-header"><div><div class="order-id">Order #' + order.id + '</div><div class="order-date">' + order.date + ' at ' + order.time + '</div></div></div>' +
+        '<div class="order-items">' + itemsList + '</div>' +
+        '<div class="order-total">Total: ₹' + order.total + '</div>';
+      ordersList.appendChild(orderCard);
+    });
+  }
+  document.getElementById('ordersModal').style.display = 'flex';
+}
+
+function closeOrdersModal() {
+  document.getElementById('ordersModal').style.display = 'none';
+}
+
+function closeModal() {
+  document.getElementById('orderModal').style.display = 'none';
+}
+
+function submitContactForm(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const name = formData.get('name');
+  
+  showNotification('success', 'Message Sent!', 'Thank you ' + name + '! We will get back to you shortly.');
+  event.target.reset();
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const firstTab = document.querySelector('.menu-tab');
+  showMenu('breakfast', firstTab);
+  if (isUserLoggedIn) updateUIForLoggedInUser();
+});
+</script>
+
+</body>
+</html>
